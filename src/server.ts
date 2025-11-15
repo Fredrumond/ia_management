@@ -1,17 +1,16 @@
-import Fastify from 'fastify';
+import { buildApp } from './app'
 
-const app = Fastify();
-const PORT = 3000;
+const start = async () => {
+  const app = await buildApp()
+  const port = 3000
 
-app.get('/health', async () => {
-  return { status: 'OK' };
-});
-
-app.listen({ port: PORT, host: '0.0.0.0' }, (err) => {
-  if (err) {
-    console.error(err);
-    process.exit(1);
+  try {
+    await app.listen({ port, host: '0.0.0.0' })
+    console.log(`Server running on http://localhost:${port}`)
+  } catch (err) {
+    app.log.error(err)
+    process.exit(1)
   }
-  console.log(`Servidor rodando na porta ${PORT}`);
-});
+}
 
+start()

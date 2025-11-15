@@ -43,6 +43,26 @@ npm start
 
 O servidor estará rodando em `http://localhost:3000`
 
+## 🐳 Docker
+
+### Executar com Docker
+
+1. Configure o arquivo `.env` baseado no `env.example`
+
+2. Inicie os containers:
+
+```bash
+docker-compose up -d
+```
+
+3. Para parar os containers:
+
+```bash
+docker-compose down
+```
+
+A aplicação estará disponível em `http://localhost:3000` e o MySQL na porta `3306`.
+
 ## 📚 Rotas disponíveis
 
 ### GET /health
