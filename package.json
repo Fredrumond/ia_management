@@ -9,18 +9,23 @@
     "build": "tsc",
     "clean": "rm -rf dist"
   },
-  "keywords": ["node", "fastify", "typescript"],
+  "keywords": [
+    "node",
+    "fastify",
+    "typescript"
+  ],
   "author": "Frederico Xavier Drumond",
   "license": "ISC",
   "dependencies": {
-    "fastify": "^4.24.3",
     "@fastify/cors": "^8.4.1",
-    "dotenv": "^16.3.1"
+    "@prisma/client": "^6.19.0",
+    "dotenv": "^16.3.1",
+    "fastify": "^4.24.3"
   },
   "devDependencies": {
     "@types/node": "^20.9.0",
+    "prisma": "^6.19.0",
     "tsx": "^4.6.0",
     "typescript": "^5.2.2"
   }
 }
-

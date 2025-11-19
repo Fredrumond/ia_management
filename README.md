@@ -68,6 +68,12 @@ A aplicação estará disponível em `http://localhost:3000` e o MySQL na porta 
 ### GET /health
 Health check da aplicação
 
+## Prisma
+
+- Edite o schema.prisma com as mudanças desejadas
+- Execute npx prisma db push --force-reset (dropa tudo e recria)
+- Apenas npx prisma db push 
+
 ## 🚧 Guia de desenvolvimento
 ### Fase 1: Infraestrutura e Setup
 - [X] Criar uma estrutura via docker
@@ -75,8 +81,10 @@ Health check da aplicação
 - [X] Criar estrutura basica para rota de /user
 
 ### Fase 2: Persistência de Dados
-- [ ] Configurar Prisma ORM
-- [ ] Criar estrutura de persistência de dados de `/user`
+- [X] Configurar Prisma ORM
+- [X] Criar estrutura de persistência de dados de `/user`
+- [ ] Ciar repository de `/user`
+- [ ] Implementar: show, update, delete
 
 ### Fase 3: Qualidade e Testes
 - [ ] Configurar testes para `/user`

@@ -1,6 +1,7 @@
 import Fastify from 'fastify'
 import healthRoute from './routes/health.route'
 import userRoute from './routes/user.route'
+import prisma from './lib/prisma'
 
 export async function buildApp() {
   const app = Fastify({
@@ -8,7 +9,7 @@ export async function buildApp() {
   })
 
 app.register(healthRoute, { prefix: '/health' });
-app.register(userRoute, { prefix: '/users' });
+app.register(userRoute, { prefix: '/users', prisma });
 
   return app
 }
