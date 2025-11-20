@@ -83,10 +83,12 @@ Health check da aplicação
 ### Fase 2: Persistência de Dados
 - [X] Configurar Prisma ORM
 - [X] Criar estrutura de persistência de dados de `/user`
-- [ ] Ciar repository de `/user`
+- [X] Ciar repository de `/user`
 - [ ] Implementar: show, update, delete
 
 ### Fase 3: Qualidade e Testes
+- [ ] Padronizar as repostas HTTP em um helper
+- [ ] Desacoplar o Fastify da estrutura do projeto, para permitir a troca
 - [ ] Configurar testes para `/user`
 
 ### Fase 4: Documentação
