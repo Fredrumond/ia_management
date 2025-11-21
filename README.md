@@ -2,47 +2,6 @@
 
 Aplicação Node.js com Fastify e TypeScript.
 
-## 🚀 Começando
-
-### Pré-requisitos
-
-- Node.js (versão 14 ou superior)
-- npm ou yarn
-
-### Instalação
-
-1. Instale as dependências:
-
-```bash
-npm install
-```
-
-2. Configure as variáveis de ambiente:
-
-O arquivo `.env` já está criado com as configurações básicas.
-
-### Executar a aplicação
-
-**Modo de desenvolvimento (com auto-reload):**
-
-```bash
-npm run dev
-```
-
-**Build para produção:**
-
-```bash
-npm run build
-```
-
-**Executar em produção:**
-
-```bash
-npm start
-```
-
-O servidor estará rodando em `http://localhost:3000`
-
 ## 🐳 Docker
 
 ### Executar com Docker
@@ -68,6 +27,22 @@ A aplicação estará disponível em `http://localhost:3000` e o MySQL na porta 
 ### GET /health
 Health check da aplicação
 
+### POST /users
+Criar um novo usuário
+- Body: `{ "name": "string", "email": "string", "password": "string" }`
+
+### GET /users
+Listar todos os usuários
+
+### GET /users/:id
+Buscar usuário por ID
+
+### DELETE /users/:id
+Desativar usuário (soft delete)
+
+### PATCH /users/:id/reactivate
+Reativar usuário desativado
+
 ## Prisma
 
 - Edite o schema.prisma com as mudanças desejadas
@@ -84,10 +59,10 @@ Health check da aplicação
 - [X] Configurar Prisma ORM
 - [X] Criar estrutura de persistência de dados de `/user`
 - [X] Ciar repository de `/user`
-- [ ] Implementar: show, update, delete
+- [X] Implementar: show, update, delete, reactivate
 
 ### Fase 3: Qualidade e Testes
-- [ ] Padronizar as repostas HTTP em um helper
+- [X] Padronizar as repostas HTTP em um helper
 - [ ] Desacoplar o Fastify da estrutura do projeto, para permitir a troca
 - [ ] Configurar testes para `/user`
 

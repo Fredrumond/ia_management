@@ -44,8 +44,16 @@ export class PrismaUserRepository implements Repository<PrismaUser> {
     }
     
     async delete(id: string): Promise<void> {
-        await this.prismaClient.user.delete({
-            where: { id: parseInt(id) }
+        await this.prismaClient.user.update({
+            where: { id: parseInt(id) },
+            data: { status: 'INACTIVE' }
+        });
+    }
+
+    async reactivate(id: string): Promise<void> {
+        await this.prismaClient.user.update({
+            where: { id: parseInt(id) },
+            data: { status: 'ACTIVE' }
         });
     }
 

@@ -38,4 +38,36 @@ export default class UserService {
         
         return user;
     }
+
+    async deleteUser(id: string) {
+        const user = await this.userRepository.findById(id);
+        
+        if (!user) {
+            throw new Error('User not found');
+        }
+        
+        if (user.status === 'INACTIVE') {
+            throw new Error('User already inactive');
+        }
+        
+        await this.userRepository.delete(id);
+        
+        return { message: 'User deactivated successfully' };
+    }
+
+    async reactivateUser(id: string) {
+        const user = await this.userRepository.findById(id);
+        
+        if (!user) {
+            throw new Error('User not found');
+        }
+        
+        if (user.status === 'ACTIVE') {
+            throw new Error('User already active');
+        }
+        
+        await this.userRepository.reactivate(id);
+        
+        return { message: 'User reactivated successfully' };
+    }
 }
