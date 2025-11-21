@@ -49,22 +49,53 @@ Reativar usuário desativado
 - Execute npx prisma db push --force-reset (dropa tudo e recria)
 - Apenas npx prisma db push 
 
-## 🚧 Guia de desenvolvimento
-### Fase 1: Infraestrutura e Setup
-- [X] Criar uma estrutura via docker
-- [X] Criar uma rota de /health para validação de aplicação
-- [X] Criar estrutura basica para rota de /user
+## 🚧 Guia de Desenvolvimento
 
-### Fase 2: Persistência de Dados
-- [X] Configurar Prisma ORM
-- [X] Criar estrutura de persistência de dados de `/user`
-- [X] Ciar repository de `/user`
-- [X] Implementar: show, update, delete, reactivate
+Para acompanhar o roadmap e progresso do projeto, consulte o [Guia de Desenvolvimento](docs/DEVELOPMENT.md).
 
-### Fase 3: Qualidade e Testes
-- [X] Padronizar as repostas HTTP em um helper
-- [ ] Desacoplar o Fastify da estrutura do projeto, para permitir a troca
-- [ ] Configurar testes para `/user`
+## 📐 Padrões e Boas Práticas
 
-### Fase 4: Documentação
-- [ ] Criar guia de boas praticas do projeto
+### Arquitetura
+- **Ports & Adapters (Hexagonal)**: Desacoplamento do framework HTTP através de interfaces genéricas
+- **Dependency Injection**: Injeção de dependências manual no `app.ts`
+- **Repository Pattern**: Abstração da camada de dados com interface genérica
+- **Service Layer**: Lógica de negócio isolada dos controllers
+
+### Estrutura de Camadas
+```
+Controllers → Services → Repositories → Database
+     ↓           ↓            ↓
+  HTTP Layer  Business    Data Access
+```
+
+### Princípios Aplicados
+- **Single Responsibility**: Cada classe tem uma única responsabilidade
+- **Dependency Inversion**: Dependência de abstrações (interfaces), não de implementações
+- **Open/Closed**: Aberto para extensão (novos adapters), fechado para modificação
+- **Interface Segregation**: Interfaces específicas e coesas
+
+### Convenções do Código
+- **TypeScript**: Tipagem forte em todo o projeto
+- **Async/Await**: Operações assíncronas consistentes
+- **Error Handling**: Tratamento de erros centralizado nos controllers
+- **HTTP Responses**: Helper padronizado para respostas HTTP
+- **Soft Delete**: Desativação lógica ao invés de exclusão física
+- **Status Enum**: Controle de estado dos registros (ACTIVE/INACTIVE)
+
+### Organização de Arquivos
+- `adapters/`: Implementações específicas de frameworks
+- `ports/`: Interfaces genéricas (contratos)
+- `controllers/`: Camada de apresentação HTTP
+- `services/`: Lógica de negócio
+- `repositories/`: Acesso a dados
+- `types/`: Definições de tipos TypeScript
+- `helpers/`: Utilitários reutilizáveis
+
+## 📖 Referências
+
+Este projeto foi inspirado e utiliza conceitos de:
+
+- [Easy Skeleton API Node.js](https://github.com/Fredrumond/easy-skeleton-api-nodejs/tree/master) - Estrutura base para criação rápida de APIs Node.js - Projedo realizado em 2020
+- **Hexagonal Architecture** (Alistair Cockburn) - Ports & Adapters Pattern
+- **Clean Architecture** (Robert C. Martin) - Separação de camadas e dependências
+- **SOLID Principles** - Princípios de design orientado a objetos

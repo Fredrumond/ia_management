@@ -1,15 +1,19 @@
-import Fastify from 'fastify'
-import healthRoute from './routes/health.route'
-import userRoute from './routes/user.route'
-import prisma from './lib/prisma'
+import { IHttpServer } from './ports/http/http.interfaces';
+import { UserController } from './controllers/user.controller';
+import { registerUserRoutes } from './routes/user.route';
+import UserService from './services/user.service';
+import { PrismaUserRepository } from './repositories/prisma/prisma.user.repository';
+import prisma from './lib/prisma';
 
-export async function buildApp() {
-  const app = Fastify({
-    logger: true,
-  })
+export function buildApp(httpServer: IHttpServer) {
+  const userRepository = new PrismaUserRepository(prisma);
+  const userService = new UserService(userRepository);
+  const userController = new UserController(userService);
 
-app.register(healthRoute, { prefix: '/health' });
-app.register(userRoute, { prefix: '/users', prisma });
 
-  return app
+  httpServer.registerRoutes('/users', (router) => {
+    registerUserRoutes(router, userController);
+  });
+
+  return httpServer;
 }
