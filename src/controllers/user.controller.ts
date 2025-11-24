@@ -1,15 +1,25 @@
 import { IHttpRequest, IHttpResponse } from '../ports/http/http.interfaces';
 import { HttpResponse } from '../helpers/http.response';
-import UserService from '../services/user.service';
 import { User } from '../types/user.types';
+import { CreateUserUseCase } from '../usecases/user/create-user';
+import { GetAllUsersUseCase } from '../usecases/user/get-all-users';
+import { GetUserByIdUseCase } from '../usecases/user/get-user-by-id';
+import { DeleteUserUseCase } from '../usecases/user/delete-user';
+import { ReactivateUserUseCase } from '../usecases/user/reactivate-user';
 
 export class UserController {
-  constructor(private userService: UserService) {}
-
+  constructor(
+    private createUserUseCase: CreateUserUseCase,
+    private getAllUsersUseCase: GetAllUsersUseCase,
+    private getUserByIdUseCase: GetUserByIdUseCase,
+    private deleteUserUseCase: DeleteUserUseCase,
+    private reactivateUserUseCase: ReactivateUserUseCase
+  ) {}
   async create(request: IHttpRequest<User>): Promise<IHttpResponse> {
     try {
+      console.log('request', request);
       const user = request.body;
-      const userRegistred = await this.userService.createUser(user);
+      const userRegistred = await this.createUserUseCase.execute(user);
       return HttpResponse.created(userRegistred);
     } catch (error) {
       const errorMessage = error instanceof Error ? error.message : 'Unknown error';
@@ -24,7 +34,7 @@ export class UserController {
 
   async getAll(request: IHttpRequest): Promise<IHttpResponse> {
     try {
-      const users = await this.userService.getAllUsers();
+      const users = await this.getAllUsersUseCase.execute();
       return HttpResponse.ok(users);
     } catch (error) {
       const errorMessage = error instanceof Error ? error.message : 'Unknown error';
@@ -35,7 +45,7 @@ export class UserController {
   async getById(request: IHttpRequest<any, { id: string }>): Promise<IHttpResponse> {
     try {
       const { id } = request.params;
-      const user = await this.userService.getUserById(id);
+      const user = await this.getUserByIdUseCase.execute(id);
       return HttpResponse.ok(user);
     } catch (error) {
       const errorMessage = error instanceof Error ? error.message : 'Unknown error';
@@ -51,7 +61,7 @@ export class UserController {
   async delete(request: IHttpRequest<any, { id: string }>): Promise<IHttpResponse> {
     try {
       const { id } = request.params;
-      const result = await this.userService.deleteUser(id);
+      const result = await this.deleteUserUseCase.execute(id);
       return HttpResponse.ok(result);
     } catch (error) {
       const errorMessage = error instanceof Error ? error.message : 'Unknown error';
@@ -71,7 +81,7 @@ export class UserController {
   async reactivate(request: IHttpRequest<any, { id: string }>): Promise<IHttpResponse> {
     try {
       const { id } = request.params;
-      const result = await this.userService.reactivateUser(id);
+      const result = await this.reactivateUserUseCase.execute(id);
       return HttpResponse.ok(result);
     } catch (error) {
       const errorMessage = error instanceof Error ? error.message : 'Unknown error';

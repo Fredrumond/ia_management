@@ -99,3 +99,13 @@ Este projeto foi inspirado e utiliza conceitos de:
 - **Hexagonal Architecture** (Alistair Cockburn) - Ports & Adapters Pattern
 - **Clean Architecture** (Robert C. Martin) - Separação de camadas e dependências
 - **SOLID Principles** - Princípios de design orientado a objetos
+
+
+
+
+curl -X POST http://localhost:3000/users \
+  -H "Content-Type: application/json" \
+  -d '{"name": "João Silva", "email": "16joao@example.com", "password": "senha123"}'
+  
+curl -X GET http://localhost:3000/users
+curl -X GET http://localhost:3000/users/3    

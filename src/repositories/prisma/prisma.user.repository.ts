@@ -8,14 +8,10 @@ export class PrismaUserRepository implements Repository<PrismaUser> {
         return this.prismaClient.user.findMany();
     }
     
-    async findById(id: string): Promise<PrismaUser> {
+    async findById(id: string): Promise<PrismaUser | null> {
         const user = await this.prismaClient.user.findUnique({
             where: { id: parseInt(id) }
         });
-        
-        if (!user) {
-            throw new Error(`User with id ${id} not found`);
-        }
         
         return user;
     }
