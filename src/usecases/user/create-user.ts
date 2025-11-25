@@ -1,13 +1,16 @@
 import { User } from "../../types/user.types";
 import { Repository } from "../../repositories/repository";
 import { PrismaClient } from "@prisma/client";
+import { User as UserEntity } from "../../domain/user.entity";
 
 export class CreateUserUseCase {
     constructor(private userRepository: Repository<PrismaClient>) {}
 
     async execute(user: User): Promise<User> {
 
-        console.log('user', user);
+        const userEntity = UserEntity.create(user.name, user.email, user.password);
+        console.log('userEntity', userEntity);
+
         const existingUser = await this.userRepository.findOne({ 
             email: user.email 
         });
@@ -21,7 +24,16 @@ export class CreateUserUseCase {
             email: user.email,
             password: user.password
         });
+        
+        const restoredUser = UserEntity.restore(
+            userRegistred.id, 
+            userRegistred.name, 
+            userRegistred.email, 
+            userRegistred.password, 
+            userRegistred.status, 
+            userRegistred.createdAt
+        );
 
-        return userRegistred;
+        return restoredUser;
     }
 }

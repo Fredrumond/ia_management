@@ -20,6 +20,13 @@
 - [X] Padronizar as respostas HTTP em um helper
 - [X] Desacoplar o Fastify da estrutura do projeto (Ports & Adapters)
 - [X] Tranformar todas funções do service em casos de uso
+- [ ] Criar camada de dominio de user
+- [ ] Utilizar dominio nos casos de uso de user
+  - [X] Create
+  - [ ] Delete
+  - [ ] Reactive
+  - [ ] Get all
+  - [ ] Get By Id
 - [ ] Configurar framework de testes 
 - [ ] Criar testes unitários para UserService
 - [ ] Criar testes de integração para rotas de `/users`
@@ -68,4 +75,4 @@
 - [ ] Implementar versionamento semântico
 
 ### Problemas para entender
-- [] Com a transformação dos serviços em useCases o registro de rotas em app.ts ficou muito grande. Cada rota que eu criar vou ter que trazer todos os seus casos de uso. A medica vai ir crescendo exponencialmente. Buscar entender: Padrão Module ou Padrão Factory
+- [ ] Com a transformação dos serviços em useCases o registro de rotas em app.ts ficou muito grande. Cada rota que eu criar vou ter que trazer todos os seus casos de uso. A medica vai ir crescendo exponencialmente. Buscar entender: Padrão Module ou Padrão Factory
