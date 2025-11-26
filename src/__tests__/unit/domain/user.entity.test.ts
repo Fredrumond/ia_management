@@ -1,0 +1,228 @@
+import { describe, it, expect } from 'vitest'
+import { User as UserEntity } from '../../../domain/user.entity'
+
+describe('User Entity', () => {
+  describe('create', () => {
+    it('should create a valid user', () => {
+      const userData = {
+        name: 'John Doe',
+        email: 'john@example.com',
+        password: 'password123'
+      }
+
+      const user = UserEntity.create(userData.name, userData.email, userData.password)
+
+      expect(user.name).toBe('John Doe')
+      expect(user.email).toBe('john@example.com')
+      expect(user.isActive).toBe(true)
+      expect(user.createdAt).toBeInstanceOf(Date)
+    })
+
+    it('should throw error if name has less than 3 characters', () => {
+      const userData = {
+        name: 'Jo',
+        email: 'john@example.com',
+        password: 'password123'
+      }
+
+      expect(() => UserEntity.create(userData.name, userData.email, userData.password)).toThrow('Name must have at least 3 characters')
+    })
+
+    it('should throw error if name is empty', () => {
+      const userData = {
+        name: '',
+        email: 'john@example.com',
+        password: 'password123'
+      }
+
+      expect(() => UserEntity.create(userData.name, userData.email, userData.password)).toThrow('Name must have at least 3 characters')
+    })
+
+    it('should throw error if email is invalid', () => {
+      const userData = {
+        name: 'John Doe',
+        email: 'invalid-email',
+        password: 'password123'
+      }
+
+      expect(() => UserEntity.create(userData.name, userData.email, userData.password)).toThrow('Invalid email format')
+    })
+
+    it('should throw error if email is empty', () => {
+      const userData = {
+        name: 'John Doe',
+        email: '',
+        password: 'password123'
+      }
+
+      expect(() => UserEntity.create(userData.name, userData.email, userData.password)).toThrow('Invalid email format')
+    })
+
+    it('should throw error if password has less than 6 characters', () => {
+      const userData = {
+        name: 'John Doe',
+        email: 'john@example.com',
+        password: '12345'
+      }
+
+      expect(() => UserEntity.create(userData.name, userData.email, userData.password)).toThrow('Password must have at least 6 characters')
+    })
+
+    it('should throw error if password is empty', () => {
+      const userData = {
+        name: 'John Doe',
+        email: 'john@example.com',
+        password: ''
+      }
+
+      expect(() => UserEntity.create(userData.name, userData.email, userData.password)).toThrow('Password must have at least 6 characters')
+    })
+
+    it('should throw error if name has only spaces', () => {
+      const userData = {
+        name: '   ',
+        email: 'john@example.com',
+        password: 'password123'
+      }
+
+      expect(() => UserEntity.create(userData.name, userData.email, userData.password)).toThrow('Name must have at least 3 characters')
+    })
+  })
+
+  describe('restore', () => {
+    it('should restore a user with ACTIVE status', () => {
+      const user = UserEntity.restore(
+        1,
+        'John Doe',
+        'john@example.com',
+        'password123',
+        'ACTIVE',
+        new Date('2024-01-01')
+      )
+
+      expect(user.id).toBe(1)
+      expect(user.name).toBe('John Doe')
+      expect(user.email).toBe('john@example.com')
+      expect(user.status).toBe('ACTIVE')
+      expect(user.isActive).toBe(true)
+      expect(user.createdAt).toEqual(new Date('2024-01-01'))
+    })
+
+    it('should restore a user with INACTIVE status', () => {
+      const user = UserEntity.restore(
+        1,
+        'John Doe',
+        'john@example.com',
+        'password123',
+        'INACTIVE',
+        new Date('2024-01-01')
+      )
+
+      expect(user.id).toBe(1)
+      expect(user.status).toBe('INACTIVE')
+      expect(user.isActive).toBe(false)
+    })
+
+    it('should throw error when restoring with invalid name', () => {
+      expect(() => {
+        UserEntity.restore(
+          1,
+          'Jo',
+          'john@example.com',
+          'password123',
+          'ACTIVE',
+          new Date('2024-01-01')
+        )
+      }).toThrow('Name must have at least 3 characters')
+    })
+
+    it('should throw error when restoring with invalid email', () => {
+      expect(() => {
+        UserEntity.restore(
+          1,
+          'John Doe',
+          'invalid-email',
+          'password123',
+          'ACTIVE',
+          new Date('2024-01-01')
+        )
+      }).toThrow('Invalid email format')
+    })
+
+    it('should throw error when restoring with invalid password', () => {
+      expect(() => {
+        UserEntity.restore(
+          1,
+          'John Doe',
+          'john@example.com',
+          '12345',
+          'ACTIVE',
+          new Date('2024-01-01')
+        )
+      }).toThrow('Password must have at least 6 characters')
+    })
+  })
+
+  describe('deactivate', () => {
+    it('should deactivate an active user', () => {
+      const user = UserEntity.create('John Doe', 'john@example.com', 'password123')
+
+      user.deactivate()
+
+      expect(user.isActive).toBe(false)
+      expect(user.status).toBe('INACTIVE')
+    })
+
+    it('should throw error when trying to deactivate an already inactive user', () => {
+      const user = UserEntity.restore(
+        1,
+        'John Doe',
+        'john@example.com',
+        'password123',
+        'INACTIVE',
+        new Date('2024-01-01')
+      )
+
+      expect(() => user.deactivate()).toThrow('User already inactive')
+    })
+  })
+
+  describe('activate', () => {
+    it('should activate an inactive user', () => {
+      const user = UserEntity.create('John Doe', 'john@example.com', 'password123')
+
+      user.deactivate()
+      user.activate()
+
+      expect(user.isActive).toBe(true)
+      expect(user.status).toBe('ACTIVE')
+    })
+
+    it('should throw error when trying to activate an already active user', () => {
+      const user = UserEntity.create('John Doe', 'john@example.com', 'password123')
+
+      expect(() => user.activate()).toThrow('User already active')
+    })
+  })
+
+  describe('isActive', () => {
+    it('should return true when user status is ACTIVE', () => {
+      const user = UserEntity.create('John Doe', 'john@example.com', 'password123')
+
+      expect(user.isActive).toBe(true)
+    })
+
+    it('should return false when user status is INACTIVE', () => {
+      const user = UserEntity.restore(
+        1,
+        'John Doe',
+        'john@example.com',
+        'password123',
+        'INACTIVE',
+        new Date('2024-01-01')
+      )
+
+      expect(user.isActive).toBe(false)
+    })
+  })
+})

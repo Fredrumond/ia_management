@@ -20,17 +20,17 @@
 - [X] Padronizar as respostas HTTP em um helper
 - [X] Desacoplar o Fastify da estrutura do projeto (Ports & Adapters)
 - [X] Tranformar todas funções do service em casos de uso
-- [ ] Criar camada de dominio de user
+- [X] Criar camada de dominio de user
 - [X] Utilizar dominio nos casos de uso de user
   - [X] Create
   - [X] Delete
   - [X] Reactive
   - [X] Get all
   - [X] Get By Id
-- [ ] Configurar framework de testes 
-- [ ] Criar testes unitários para UserService
+- [X] Configurar framework de testes (vitest @vitest/ui supertest @types/supertest com cobertura @vitest/coverage-v8 )
+- [X] Criar testes unitários UserEntity
 - [ ] Criar testes de integração para rotas de `/users`
-- [ ] Configurar cobertura de testes (coverage)
+- [X] Configurar cobertura de testes (coverage)
 - [ ] Adicionar testes para o UserRepository
 - [ ] Implementar testes para validações de negócio
 

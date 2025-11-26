@@ -100,7 +100,20 @@ Este projeto foi inspirado e utiliza conceitos de:
 - **Clean Architecture** (Robert C. Martin) - Separação de camadas e dependências
 - **SOLID Principles** - Princípios de design orientado a objetos
 
+# Rodar todos os testes
+npm test
 
+# Rodar testes uma vez (CI)
+npm run test:run
+
+# Rodar com interface visual
+npm run test:ui
+
+# Rodar com cobertura
+npm run test:coverage
+
+# Rodar em modo watch
+npm run test:watch
 
 
 curl -X POST http://localhost:3000/users \

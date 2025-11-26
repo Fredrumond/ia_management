@@ -7,7 +7,12 @@
     "start": "node dist/server.js",
     "dev": "tsx watch src/server.ts",
     "build": "tsc",
-    "clean": "rm -rf dist"
+    "clean": "rm -rf dist",
+    "test": "vitest",
+    "test:run": "vitest run",
+    "test:ui": "vitest --ui",
+    "test:coverage": "vitest run --coverage",
+    "test:watch": "vitest --watch"
   },
   "keywords": [
     "node",
@@ -24,8 +29,13 @@
   },
   "devDependencies": {
     "@types/node": "^20.9.0",
+    "@types/supertest": "^6.0.3",
+    "@vitest/coverage-v8": "^4.0.14",
+    "@vitest/ui": "^4.0.14",
     "prisma": "^6.19.0",
+    "supertest": "^7.1.4",
     "tsx": "^4.6.0",
-    "typescript": "^5.2.2"
+    "typescript": "^5.2.2",
+    "vitest": "^4.0.14"
   }
 }
