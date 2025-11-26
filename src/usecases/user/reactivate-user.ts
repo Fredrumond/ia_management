@@ -1,21 +1,20 @@
 import { Repository } from "../../repositories/repository";
 import { PrismaClient } from "@prisma/client";
+import { User as UserEntity } from "../../domain/user.entity";
 
 export class ReactivateUserUseCase {
     constructor(private userRepository: Repository<PrismaClient>) {}
 
     async execute(id: string): Promise<{ message: string }> {
         const user = await this.userRepository.findById(id);
+        const userEntity = UserEntity.restore(user.id, user.name, user.email, user.password, user.status, user.createdAt);
         
-        if (!user) {
+        if (!userEntity) {
             throw new Error('User not found');
         }
-        
-        if (user.status === 'ACTIVE') {
-            throw new Error('User already active');
-        }
-        
-        await this.userRepository.reactivate(id);
+
+        userEntity.activate();
+        await this.userRepository.update(id, userEntity);
         
         return { message: 'User reactivated successfully' };
     }

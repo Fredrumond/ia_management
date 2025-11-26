@@ -108,4 +108,5 @@ curl -X POST http://localhost:3000/users \
   -d '{"name": "João Silva", "email": "16joao@example.com", "password": "senha123"}'
   
 curl -X GET http://localhost:3000/users
-curl -X GET http://localhost:3000/users/3    
+curl -X GET http://localhost:3000/users/3
+curl -X DELETE http://localhost:3000/users/3  

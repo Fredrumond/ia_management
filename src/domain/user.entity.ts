@@ -1,11 +1,11 @@
 export class User {
     private constructor(
-      private readonly _id: number | null,
-      private _name: string,
-      private _email: string,
-      private _password: string,
-      private _status: 'ACTIVE' | 'INACTIVE',
-      private readonly _createdAt: Date
+      public readonly id: number | null,
+      public readonly name: string,
+      public readonly email: string,
+      public readonly password: string,
+      public status: 'ACTIVE' | 'INACTIVE',
+      public readonly createdAt: Date
     ) {
       this.validate();
     }
@@ -26,40 +26,33 @@ export class User {
     }
   
     private validate(): void {
-      if (!this._name || this._name.trim().length < 3) {
+      if (!this.name || this.name.trim().length < 3) {
         throw new Error('Name must have at least 3 characters');
       }
   
       const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-      if (!this._email || !emailRegex.test(this._email)) {
+      if (!this.email || !emailRegex.test(this.email)) {
         throw new Error('Invalid email format');
       }
   
-      if (!this._password || this._password.length < 6) {
+      if (!this.password || this.password.length < 6) {
         throw new Error('Password must have at least 6 characters');
       }
     }
   
     activate(): void {
-      if (this._status === 'ACTIVE') {
+      if (this.status === 'ACTIVE') {
         throw new Error('User already active');
       }
-      this._status = 'ACTIVE';
+      this.status = 'ACTIVE';
     }
   
     deactivate(): void {
-      if (this._status === 'INACTIVE') {
+      if (this.status === 'INACTIVE') {
         throw new Error('User already inactive');
       }
-      this._status = 'INACTIVE';
+      this.status = 'INACTIVE';
     }
   
- 
-    get id(): number | null { return this._id; }
-    get name(): string { return this._name; }
-    get email(): string { return this._email; }
-    get password(): string { return this._password; }
-    get status(): 'ACTIVE' | 'INACTIVE' { return this._status; }
-    get isActive(): boolean { return this._status === 'ACTIVE'; }
-    get createdAt(): Date { return this._createdAt; }
+    get isActive(): boolean { return this.status === 'ACTIVE'; }
   }

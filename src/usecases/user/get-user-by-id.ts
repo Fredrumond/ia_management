@@ -1,14 +1,15 @@
 import { User } from "../../types/user.types";
 import { Repository } from "../../repositories/repository";
 import { PrismaClient } from "@prisma/client";
+import { User as UserEntity } from "../../domain/user.entity";
 
 export class GetUserByIdUseCase {
     constructor(private userRepository: Repository<PrismaClient>) {}
 
     async execute(id: string): Promise<User> {
         const user = await this.userRepository.findById(id);
-        
-        if (!user) {
+        const userEntity = UserEntity.restore(user.id, user.name, user.email, user.password, user.status, user.createdAt);
+        if (!userEntity) {
             throw new Error('User not found');
         }
         

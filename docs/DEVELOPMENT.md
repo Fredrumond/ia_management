@@ -21,12 +21,12 @@
 - [X] Desacoplar o Fastify da estrutura do projeto (Ports & Adapters)
 - [X] Tranformar todas funções do service em casos de uso
 - [ ] Criar camada de dominio de user
-- [ ] Utilizar dominio nos casos de uso de user
+- [X] Utilizar dominio nos casos de uso de user
   - [X] Create
-  - [ ] Delete
-  - [ ] Reactive
-  - [ ] Get all
-  - [ ] Get By Id
+  - [X] Delete
+  - [X] Reactive
+  - [X] Get all
+  - [X] Get By Id
 - [ ] Configurar framework de testes 
 - [ ] Criar testes unitários para UserService
 - [ ] Criar testes de integração para rotas de `/users`
