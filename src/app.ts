@@ -1,6 +1,6 @@
-import { IHttpServer } from './ports/http/http.interfaces';
-import { UserController } from './controllers/user.controller';
-import { registerUserRoutes } from './routes/user.route';
+import { IHttpServer } from './infra/http/http.interfaces';
+import { UserController } from './infra/http/controllers/user.controller';
+import { registerUserRoutes } from './infra/http/routes/user.route';
 import { PrismaUserRepository } from './infra/db/prisma/prisma.user.repository';
 import prisma from './lib/prisma';
 import { CreateUserUseCase } from './application/usecases/user/create-user';

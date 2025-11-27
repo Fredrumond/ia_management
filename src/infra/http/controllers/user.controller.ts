@@ -1,11 +1,11 @@
-import { IHttpRequest, IHttpResponse } from '../ports/http/http.interfaces';
-import { HttpResponse } from '../helpers/http.response';
-import { User } from '../types/user.types';
-import { CreateUserUseCase } from '../application/usecases/user/create-user';
-import { GetAllUsersUseCase } from '../application/usecases/user/get-all-users';
-import { GetUserByIdUseCase } from '../application/usecases/user/get-user-by-id';
-import { DeleteUserUseCase } from '../application/usecases/user/delete-user';
-import { ReactivateUserUseCase } from '../application/usecases/user/reactivate-user';
+import { IHttpRequest, IHttpResponse } from '../../http/http.interfaces';
+import { HttpResponse } from '../http.response';
+import { User } from '../../../types/user.types';
+import { CreateUserUseCase } from '../../../application/usecases/user/create-user';
+import { GetAllUsersUseCase } from '../../../application/usecases/user/get-all-users';
+import { GetUserByIdUseCase } from '../../../application/usecases/user/get-user-by-id';
+import { DeleteUserUseCase } from '../../../application/usecases/user/delete-user';
+import { ReactivateUserUseCase } from '../../../application/usecases/user/reactivate-user';
 
 export class UserController {
   constructor(

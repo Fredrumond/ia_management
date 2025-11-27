@@ -1,4 +1,4 @@
-import { IRouter } from '../ports/http/http.interfaces';
+import { IRouter } from '../../http/http.interfaces';
 import { UserController } from '../controllers/user.controller';
 
 export function registerUserRoutes(router: IRouter, userController: UserController): void {

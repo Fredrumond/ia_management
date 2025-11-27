@@ -5,7 +5,7 @@ import {
   IRouteHandler, 
   IHttpRequest,
   IHttpResponse 
-} from '../../ports/http/http.interfaces';
+} from '../../infra/http/http.interfaces';
 
 class FastifyRouterAdapter implements IRouter {
   constructor(private fastifyInstance: FastifyInstance) {}

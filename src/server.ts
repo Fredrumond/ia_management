@@ -1,5 +1,5 @@
 import { buildApp } from './app';
-import { FastifyAdapter } from './adapters/fastify/fastify.adapter';
+import { FastifyAdapter } from './infra/http/fastify/fastify.adapter';
 
 const start = async () => {
   const httpServer = new FastifyAdapter();
