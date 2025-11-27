@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest'
-import { User as UserEntity } from '../../../domain/user.entity'
+import { User as UserEntity } from '../../../domain/user/user.entity'
 
 describe('User Entity', () => {
   describe('create', () => {

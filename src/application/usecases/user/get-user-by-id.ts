@@ -1,10 +1,9 @@
 import { User } from "../../types/user.types";
-import { Repository } from "../../repositories/repository";
-import { PrismaClient } from "@prisma/client";
-import { User as UserEntity } from "../../domain/user.entity";
+import { UserRepositoryInterface } from "../../../domain/user/user.repository.interface";
+import { User as UserEntity } from "../../../domain/user/user.entity"
 
 export class GetUserByIdUseCase {
-    constructor(private userRepository: Repository<PrismaClient>) {}
+    constructor(private userRepository: UserRepositoryInterface) {}
 
     async execute(id: string): Promise<User> {
         const user = await this.userRepository.findById(id);

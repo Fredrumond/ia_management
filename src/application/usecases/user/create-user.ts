@@ -1,10 +1,9 @@
 import { User } from "../../types/user.types";
-import { Repository } from "../../repositories/repository";
-import { PrismaClient } from "@prisma/client";
-import { User as UserEntity } from "../../domain/user.entity";
+import { UserRepositoryInterface } from "../../../domain/user/user.repository.interface";
+import { User as UserEntity } from "../../../domain/user/user.entity"
 
-export class CreateUserUseCase {
-    constructor(private userRepository: Repository<PrismaClient>) {}
+export class CreateUserUseCase {    
+    constructor(private userRepository: UserRepositoryInterface) {}
 
     async execute(user: User): Promise<User> {
 
@@ -19,11 +18,7 @@ export class CreateUserUseCase {
             throw new Error('Email already registered');
         }
 
-        const userRegistred = await this.userRepository.create({
-            name: user.name,
-            email: user.email,
-            password: user.password
-        });
+        const userRegistred = await this.userRepository.create(userEntity);
         
         const restoredUser = UserEntity.restore(
             userRegistred.id, 

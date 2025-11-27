@@ -11,7 +11,7 @@ export class User {
     }
   
     static create(name: string, email: string, password: string): User {
-      return new User(null, name, email, password, 'ACTIVE', new Date());
+      return new User(null, name, email, password, 'ACTIVE', new Date()); 
     }
   
     static restore(

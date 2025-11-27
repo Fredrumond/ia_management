@@ -1,11 +1,11 @@
 import { IHttpRequest, IHttpResponse } from '../ports/http/http.interfaces';
 import { HttpResponse } from '../helpers/http.response';
 import { User } from '../types/user.types';
-import { CreateUserUseCase } from '../usecases/user/create-user';
-import { GetAllUsersUseCase } from '../usecases/user/get-all-users';
-import { GetUserByIdUseCase } from '../usecases/user/get-user-by-id';
-import { DeleteUserUseCase } from '../usecases/user/delete-user';
-import { ReactivateUserUseCase } from '../usecases/user/reactivate-user';
+import { CreateUserUseCase } from '../application/usecases/user/create-user';
+import { GetAllUsersUseCase } from '../application/usecases/user/get-all-users';
+import { GetUserByIdUseCase } from '../application/usecases/user/get-user-by-id';
+import { DeleteUserUseCase } from '../application/usecases/user/delete-user';
+import { ReactivateUserUseCase } from '../application/usecases/user/reactivate-user';
 
 export class UserController {
   constructor(
@@ -33,19 +33,23 @@ export class UserController {
   }
 
   async getAll(request: IHttpRequest): Promise<IHttpResponse> {
+    console.log('request', request);
     try {
       const users = await this.getAllUsersUseCase.execute();
+      console.log('users retornados:', users); // ADICIONE ISSO
+      console.log('tipo dos users:', typeof users, Array.isArray(users)); // E ISSO
       return HttpResponse.ok(users);
     } catch (error) {
       const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+      console.log('error', error);
       return HttpResponse.internalServerError(new Error(errorMessage));
     }
   }
 
-  async getById(request: IHttpRequest<any, { id: string }>): Promise<IHttpResponse> {
+  async getById(request: IHttpRequest<any, { id: number }>): Promise<IHttpResponse> {
     try {
       const { id } = request.params;
-      const user = await this.getUserByIdUseCase.execute(id);
+      const user = await this.getUserByIdUseCase.execute(Number(id));
       return HttpResponse.ok(user);
     } catch (error) {
       const errorMessage = error instanceof Error ? error.message : 'Unknown error';
@@ -61,7 +65,7 @@ export class UserController {
   async delete(request: IHttpRequest<any, { id: string }>): Promise<IHttpResponse> {
     try {
       const { id } = request.params;
-      const result = await this.deleteUserUseCase.execute(id);
+      const result = await this.deleteUserUseCase.execute(Number(id));
       return HttpResponse.ok(result);
     } catch (error) {
       const errorMessage = error instanceof Error ? error.message : 'Unknown error';
@@ -81,7 +85,7 @@ export class UserController {
   async reactivate(request: IHttpRequest<any, { id: string }>): Promise<IHttpResponse> {
     try {
       const { id } = request.params;
-      const result = await this.reactivateUserUseCase.execute(id);
+      const result = await this.reactivateUserUseCase.execute(Number(id));
       return HttpResponse.ok(result);
     } catch (error) {
       const errorMessage = error instanceof Error ? error.message : 'Unknown error';
