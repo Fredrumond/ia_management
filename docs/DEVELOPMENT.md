@@ -33,9 +33,11 @@
 - [X] Configurar cobertura de testes (coverage)
 - [ ] Adicionar testes para o UserRepository
 - [ ] Implementar testes para validações de negócio
+- [X] Criar rota de login
+- [X] A senha esta aberta, precisa salvar criptografada
 
 ### Fase 4: Segurança e Autenticação
-- [ ] Implementar hash de senha (bcrypt)
+- [X] Implementar hash de senha (bcrypt)
 - [ ] Criar sistema de autenticação JWT
 - [ ] Implementar middleware de autenticação
 - [ ] Adicionar controle de permissões/roles

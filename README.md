@@ -115,11 +115,48 @@ npm run test:coverage
 # Rodar em modo watch
 npm run test:watch
 
+## Exemplo de Uso
 
+### cURL
+
+# 1. Criar um usuário
+```bash
 curl -X POST http://localhost:3000/users \
   -H "Content-Type: application/json" \
-  -d '{"name": "João Silva", "email": "16joao@examdple.com", "password": "senha123"}'
-  
+  -d '{
+    "name": "Teste User",
+    "email": "teste@exemplo.com",
+    "password": "senha123"
+  }'
+```
+
+# 2. Login do usuario
+```bash
+curl -X POST http://localhost:3000/auth/login \
+  -H "Content-Type: application/json" \
+  -d '{
+    "email": "teste@exemplo.com",
+    "password": "senha123"
+  }'
+```
+
+# 3. Lista usuarios
+```bash
 curl -X GET http://localhost:3000/users
+```
+
+# 4. Lista usuario por id
+```bash
 curl -X GET http://localhost:3000/users/3
+```
+
+# 5. Inativa usuario por id
+```bash
 curl -X DELETE http://localhost:3000/users/3
+```
+
+ # 5. Reativa usuario por id 
+ ```bash
+curl -X PATCH http://localhost:3000/users/3
+```
+

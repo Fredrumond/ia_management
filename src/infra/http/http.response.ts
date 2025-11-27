@@ -1,3 +1,5 @@
+import { IHttpResponse } from './http.interfaces';
+
 interface HttpResponseBody {
     message?: string;
     body?: any;
@@ -5,7 +7,7 @@ interface HttpResponseBody {
 }
 
 export class HttpResponse {
-    static ok(body: any, message?: string): HttpResponse {
+    static ok(body: any, message?: string): IHttpResponse {
         return {
             statusCode: 200,
             body: {
@@ -15,7 +17,7 @@ export class HttpResponse {
         };
     }
 
-    static created(body: any, message?: string): HttpResponse {
+    static created(body: any, message?: string): IHttpResponse {
         return {
             statusCode: 201,
             body: {
@@ -25,7 +27,7 @@ export class HttpResponse {
         };
     }
 
-    static badRequest(error: Error): HttpResponse {
+    static badRequest(error: Error): IHttpResponse {
         return {
             statusCode: 400,
             body: {
@@ -34,7 +36,25 @@ export class HttpResponse {
         };
     }
 
-    static notFound(message: string): HttpResponse {
+    static unauthorized(message: string): IHttpResponse {
+        return {
+            statusCode: 401,
+            body: {
+                error: message
+            }
+        };
+    }
+
+    static forbidden(message: string): IHttpResponse {
+        return {
+            statusCode: 403,
+            body: {
+                error: message
+            }
+        };
+    }
+
+    static notFound(message: string): IHttpResponse {
         return {
             statusCode: 404,
             body: {
@@ -43,7 +63,7 @@ export class HttpResponse {
         };
     }
 
-    static internalServerError(error: Error): HttpResponse {
+    static internalServerError(error: Error): IHttpResponse {
         return {
             statusCode: 500,
             body: {

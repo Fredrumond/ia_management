@@ -1,15 +1,12 @@
 import { User } from "../../types/user.types";
 import { UserRepositoryInterface } from "../../../domain/user/user.repository.interface";
-import { User as UserEntity } from "../../../domain/user/user.entity"
+import { User as UserEntity } from "../../../domain/user/user.entity";
+import bcrypt from "bcrypt";
 
 export class CreateUserUseCase {    
     constructor(private userRepository: UserRepositoryInterface) {}
 
     async execute(user: User): Promise<User> {
-
-        const userEntity = UserEntity.create(user.name, user.email, user.password);
-        console.log('userEntity', userEntity);
-
         const existingUser = await this.userRepository.findOne({ 
             email: user.email 
         });
@@ -17,6 +14,11 @@ export class CreateUserUseCase {
         if (existingUser) {
             throw new Error('Email already registered');
         }
+
+        // Hash da senha antes de criar a entidade
+        const hashedPassword = await bcrypt.hash(user.password, 10);
+        
+        const userEntity = UserEntity.create(user.name, user.email, hashedPassword);
 
         const userRegistred = await this.userRepository.create(userEntity);
         
