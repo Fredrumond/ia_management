@@ -31,8 +31,6 @@
 - [X] Criar testes unitários UserEntity
 - [ ] Criar testes de integração para rotas de `/users`
 - [X] Configurar cobertura de testes (coverage)
-- [ ] Adicionar testes para o UserRepository
-- [ ] Implementar testes para validações de negócio
 - [X] Criar rota de login
 - [X] A senha esta aberta, precisa salvar criptografada
 
@@ -42,7 +40,6 @@
 - [ ] Implementar middleware de autenticação
 - [ ] Adicionar controle de permissões/roles
 - [ ] Implementar refresh token
-- [ ] Adicionar rate limiting
 - [ ] Implementar validação de senha forte
 
 ### Fase 5: Validação e Sanitização
@@ -68,7 +65,14 @@
 - [ ] Documentar variáveis de ambiente
 - [ ] Criar guia de contribuição (CONTRIBUTING.md)
 
-### Fase 9: CI/CD e Deploy
+### Fase 8: Desenvolvimento do MVP
+- [X] Criar tabela de Realm
+- [X] Criar relacionamento entre User e Realm
+- [X] Adaptar user.entity para aceitar realmId
+- [X] Criar testes unidarios de realm.entity
+- [X] Deve ser recebido um realmId valido
+
+### Fase 10: CI/CD e Deploy
 - [ ] Configurar GitHub Actions ou GitLab CI
 - [ ] Implementar pipeline de testes automatizados
 - [ ] Configurar build automatizado

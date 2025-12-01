@@ -18,7 +18,18 @@ model User {
   email     String   @unique
   password  String
   status    UserStatus @default(ACTIVE)
+  realmId   Int
+  realm     Realm    @relation(fields: [realmId], references: [id])
   createdAt DateTime @default(now())
   @@map("user")
+}
+
+model Realm {
+  id        Int      @id @default(autoincrement())
+  name      String
+  users     User[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  @@map("realm")
 }
 

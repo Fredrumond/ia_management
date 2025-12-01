@@ -5,13 +5,14 @@ export class User {
       public readonly email: string,
       public readonly password: string,
       public status: 'ACTIVE' | 'INACTIVE',
+      public readonly realmId: number,
       public readonly createdAt: Date
     ) {
       this.validate();
     }
   
-    static create(name: string, email: string, password: string): User {
-      return new User(null, name, email, password, 'ACTIVE', new Date()); 
+    static create(name: string, email: string, password: string, realmId: number): User {
+      return new User(null, name, email, password, 'ACTIVE', realmId, new Date()); 
     }
   
     static restore(
@@ -20,9 +21,10 @@ export class User {
       email: string,
       password: string,
       status: 'ACTIVE' | 'INACTIVE',
+      realmId: number,
       createdAt: Date
     ): User {
-      return new User(id, name, email, password, status, createdAt);
+      return new User(id, name, email, password, status, realmId, createdAt);
     }
   
     private validate(): void {
@@ -38,6 +40,15 @@ export class User {
       if (!this.password || this.password.length < 6) {
         throw new Error('Password must have at least 6 characters');
       }
+
+      if (this.realmId === null || this.realmId === undefined) {
+        throw new Error('Realm ID is required');
+      }
+
+      if (!Number.isInteger(this.realmId) || this.realmId <= 0) {
+        throw new Error('Realm ID must be a positive integer');
+      }
+
     }
   
     activate(): void {

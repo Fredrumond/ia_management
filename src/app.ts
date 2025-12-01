@@ -4,6 +4,7 @@ import { AuthController } from './infra/http/controllers/auth.controller';
 import { registerUserRoutes } from './infra/http/routes/user.route';
 import { registerAuthRoutes } from './infra/http/routes/auth.route';
 import { PrismaUserRepository } from './infra/db/prisma/prisma.user.repository';
+import { PrismaRealmRepository } from './infra/db/prisma/prisma.realm.repository';
 import prisma from './lib/prisma';
 import { CreateUserUseCase } from './application/usecases/user/create-user';
 import { GetAllUsersUseCase } from './application/usecases/user/get-all-users';
@@ -14,9 +15,10 @@ import { LoginUserUseCase } from './application/usecases/auth/login-user';
 
 export function buildApp(httpServer: IHttpServer) {
   const userRepository = new PrismaUserRepository(prisma);
+  const realmRepository = new PrismaRealmRepository(prisma);
   
   // User use cases
-  const createUserUseCase = new CreateUserUseCase(userRepository);
+  const createUserUseCase = new CreateUserUseCase(userRepository, realmRepository);
   const getAllUsersUseCase = new GetAllUsersUseCase(userRepository);
   const getUserByIdUseCase = new GetUserByIdUseCase(userRepository);
   const deleteUserUseCase = new DeleteUserUseCase(userRepository);

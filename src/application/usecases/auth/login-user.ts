@@ -11,6 +11,7 @@ interface LoginOutput {
   name: string;
   email: string;
   status: string;
+  realmId: number;
 }
 
 export class LoginUserUseCase {
@@ -39,7 +40,8 @@ export class LoginUserUseCase {
       id: user.id!,
       name: user.name,
       email: user.email,
-      status: user.status
+      status: user.status,
+      realmId: user.realmId
     };
   }
 }

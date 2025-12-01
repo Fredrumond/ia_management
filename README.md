@@ -126,7 +126,8 @@ curl -X POST http://localhost:3000/users \
   -d '{
     "name": "Teste User",
     "email": "teste@exemplo.com",
-    "password": "senha123"
+    "password": "senha123",
+    "realmId:" 1
   }'
 ```
 

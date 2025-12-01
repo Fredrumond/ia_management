@@ -1,91 +1,66 @@
 import { describe, it, expect } from 'vitest'
 import { User as UserEntity } from '../../../domain/user/user.entity'
 
+const userData = {
+  name: 'John Doe',
+  email: 'john@example.com',
+  password: 'password123',
+  status: 'ACTIVE',
+  realmId: 1
+}
+
 describe('User Entity', () => {
   describe('create', () => {
     it('should create a valid user', () => {
-      const userData = {
-        name: 'John Doe',
-        email: 'john@example.com',
-        password: 'password123'
-      }
-
-      const user = UserEntity.create(userData.name, userData.email, userData.password)
+      const user = UserEntity.create(userData.name, userData.email, userData.password, userData.realmId)
 
       expect(user.name).toBe('John Doe')
       expect(user.email).toBe('john@example.com')
       expect(user.isActive).toBe(true)
+      expect(user.realmId).toBe(1)
       expect(user.createdAt).toBeInstanceOf(Date)
     })
 
     it('should throw error if name has less than 3 characters', () => {
-      const userData = {
-        name: 'Jo',
-        email: 'john@example.com',
-        password: 'password123'
-      }
+      const testData = { ...userData, name: 'Jo' }
 
-      expect(() => UserEntity.create(userData.name, userData.email, userData.password)).toThrow('Name must have at least 3 characters')
+      expect(() => UserEntity.create(testData.name, testData.email, testData.password, testData.realmId)).toThrow('Name must have at least 3 characters')
     })
 
     it('should throw error if name is empty', () => {
-      const userData = {
-        name: '',
-        email: 'john@example.com',
-        password: 'password123'
-      }
+      const testData = { ...userData, name: '' }
 
-      expect(() => UserEntity.create(userData.name, userData.email, userData.password)).toThrow('Name must have at least 3 characters')
+      expect(() => UserEntity.create(testData.name, testData.email, testData.password, testData.realmId)).toThrow('Name must have at least 3 characters')
     })
 
     it('should throw error if email is invalid', () => {
-      const userData = {
-        name: 'John Doe',
-        email: 'invalid-email',
-        password: 'password123'
-      }
+      const testData = { ...userData, email: 'invalid-email' }
 
-      expect(() => UserEntity.create(userData.name, userData.email, userData.password)).toThrow('Invalid email format')
+      expect(() => UserEntity.create(testData.name, testData.email, testData.password, testData.realmId)).toThrow('Invalid email format')
     })
 
     it('should throw error if email is empty', () => {
-      const userData = {
-        name: 'John Doe',
-        email: '',
-        password: 'password123'
-      }
+      const testData = { ...userData, email: '' }
 
-      expect(() => UserEntity.create(userData.name, userData.email, userData.password)).toThrow('Invalid email format')
+      expect(() => UserEntity.create(testData.name, testData.email, testData.password, testData.realmId)).toThrow('Invalid email format')
     })
 
     it('should throw error if password has less than 6 characters', () => {
-      const userData = {
-        name: 'John Doe',
-        email: 'john@example.com',
-        password: '12345'
-      }
+      const testData = { ...userData, password: '12345' }
 
-      expect(() => UserEntity.create(userData.name, userData.email, userData.password)).toThrow('Password must have at least 6 characters')
+      expect(() => UserEntity.create(testData.name, testData.email, testData.password, testData.realmId)).toThrow('Password must have at least 6 characters')
     })
 
     it('should throw error if password is empty', () => {
-      const userData = {
-        name: 'John Doe',
-        email: 'john@example.com',
-        password: ''
-      }
+      const testData = { ...userData, password: '' }
 
-      expect(() => UserEntity.create(userData.name, userData.email, userData.password)).toThrow('Password must have at least 6 characters')
+      expect(() => UserEntity.create(testData.name, testData.email, testData.password, testData.realmId)).toThrow('Password must have at least 6 characters')
     })
 
     it('should throw error if name has only spaces', () => {
-      const userData = {
-        name: '   ',
-        email: 'john@example.com',
-        password: 'password123'
-      }
+      const testData = { ...userData, name: '   ' }
 
-      expect(() => UserEntity.create(userData.name, userData.email, userData.password)).toThrow('Name must have at least 3 characters')
+      expect(() => UserEntity.create(testData.name, testData.email, testData.password, testData.realmId)).toThrow('Name must have at least 3 characters')
     })
   })
 
@@ -97,6 +72,7 @@ describe('User Entity', () => {
         'john@example.com',
         'password123',
         'ACTIVE',
+        1,
         new Date('2024-01-01')
       )
 
@@ -105,6 +81,7 @@ describe('User Entity', () => {
       expect(user.email).toBe('john@example.com')
       expect(user.status).toBe('ACTIVE')
       expect(user.isActive).toBe(true)
+      expect(user.realmId).toBe(1)
       expect(user.createdAt).toEqual(new Date('2024-01-01'))
     })
 
@@ -115,6 +92,7 @@ describe('User Entity', () => {
         'john@example.com',
         'password123',
         'INACTIVE',
+        1,
         new Date('2024-01-01')
       )
 
@@ -131,6 +109,7 @@ describe('User Entity', () => {
           'john@example.com',
           'password123',
           'ACTIVE',
+          1,
           new Date('2024-01-01')
         )
       }).toThrow('Name must have at least 3 characters')
@@ -144,6 +123,7 @@ describe('User Entity', () => {
           'invalid-email',
           'password123',
           'ACTIVE',
+          1,
           new Date('2024-01-01')
         )
       }).toThrow('Invalid email format')
@@ -157,6 +137,7 @@ describe('User Entity', () => {
           'john@example.com',
           '12345',
           'ACTIVE',
+          1,
           new Date('2024-01-01')
         )
       }).toThrow('Password must have at least 6 characters')
@@ -165,7 +146,7 @@ describe('User Entity', () => {
 
   describe('deactivate', () => {
     it('should deactivate an active user', () => {
-      const user = UserEntity.create('John Doe', 'john@example.com', 'password123')
+      const user = UserEntity.create('John Doe', 'john@example.com', 'password123', 1)
 
       user.deactivate()
 
@@ -179,7 +160,8 @@ describe('User Entity', () => {
         'John Doe',
         'john@example.com',
         'password123',
-        'INACTIVE',
+        'INACTIVE', 
+        1,
         new Date('2024-01-01')
       )
 
@@ -189,7 +171,7 @@ describe('User Entity', () => {
 
   describe('activate', () => {
     it('should activate an inactive user', () => {
-      const user = UserEntity.create('John Doe', 'john@example.com', 'password123')
+      const user = UserEntity.create('John Doe', 'john@example.com', 'password123', 1)
 
       user.deactivate()
       user.activate()
@@ -199,7 +181,7 @@ describe('User Entity', () => {
     })
 
     it('should throw error when trying to activate an already active user', () => {
-      const user = UserEntity.create('John Doe', 'john@example.com', 'password123')
+      const user = UserEntity.create('John Doe', 'john@example.com', 'password123', 1)
 
       expect(() => user.activate()).toThrow('User already active')
     })
@@ -207,7 +189,7 @@ describe('User Entity', () => {
 
   describe('isActive', () => {
     it('should return true when user status is ACTIVE', () => {
-      const user = UserEntity.create('John Doe', 'john@example.com', 'password123')
+      const user = UserEntity.create('John Doe', 'john@example.com', 'password123', 1)
 
       expect(user.isActive).toBe(true)
     })
@@ -219,6 +201,7 @@ describe('User Entity', () => {
         'john@example.com',
         'password123',
         'INACTIVE',
+        1,
         new Date('2024-01-01')
       )
 
